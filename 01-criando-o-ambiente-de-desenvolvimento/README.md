@@ -121,12 +121,12 @@ seu IDE.
 
 > [!IMPORTANT]
 > O [Serverless Framework](https://www.serverless.com/) é uma ferramenta de código aberto projetada para construir e implementar aplicações serverless de maneira eficiente e simplificada, abstraindo a complexidade de gerenciar a infraestrutura subjacente. Ele permite aos desenvolvedores focar no código da aplicação, automatizando o processo de configuração e implementação de serviços serverless, como funções do AWS Lambda, Amazon API Gateway, triggers do AWS Lambda, entre outros, em várias plataformas de nuvem. Utilizando uma simples configuração em arquivos YAML, o Serverless Framework facilita a definição de recursos, gerenciamento de permissões e integrações entre serviços, promovendo um desenvolvimento ágil e uma experiência de implantação contínua. Ao optar pelo Serverless Framework para criar e gerenciar componentes como o Amazon API Gateway e AWS Lambda, você pode acelerar significativamente o ciclo de desenvolvimento de suas aplicações serverless, garantindo escalabilidade, eficiência e redução de custos operacionais, aproveitando ao máximo a infraestrutura serverless da AWS.
-1.  Execute o comando `npm install -g serverless` para instalar o serverless framework.
+11.  Execute o comando `npm install -g serverless` para instalar o serverless framework.
     ![img/installserverless.png](img/installserverless.png)
-2.  Execute o comando `sudo apt update -y && sudo apt  install jq -y` para instalar o software que irá nos ajudar a ler e manipular Jsons no terminal
-3.  Execute o comando `npm install -g c9` para baixar a extenãp que ajudará o Cloud9 a lidar melhor com o como abrir arquivos no IDE. Semelhando ao comando code no vscode.
-4. Execute o comando `git clone https://github.com/vamperst/usp-serverless-computing.git` para clonar o repositório com os exercicios.
-5. Execute o comando `cd usp-serverless-computing/` para entrar na pasta criada pelo git
-6. Execute o comando `cd 01-criando-o-ambiente-de-desenvolvimento` para entrar na pasta com os scripts de Configuração.
-7.  Precisamos aumentar o tamanho do volume(HD) do cloud9. Para isso execute o comando  `sh resize.sh`
+12.  Execute o comando `sudo apt update -y && sudo apt  install jq -y` para instalar o software que irá nos ajudar a ler e manipular Jsons no terminal
+13.  Execute o comando `npm install -g c9` para baixar a extenãp que ajudará o Cloud9 a lidar melhor com o como abrir arquivos no IDE. Semelhando ao comando code no vscode.
+14. Execute o comando `git clone https://github.com/vamperst/usp-serverless-computing.git` para clonar o repositório com os exercicios.
+15. Execute o comando `cd usp-serverless-computing/` para entrar na pasta criada pelo git
+16. Execute o comando `cd 01-criando-o-ambiente-de-desenvolvimento` para entrar na pasta com os scripts de Configuração.
+17.  Precisamos aumentar o tamanho do volume(HD) do cloud9. Para isso execute o comando  `sh resize.sh`
    ![img/resizeEBS](img/resizeEBS.png)
