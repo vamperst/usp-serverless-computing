@@ -1,9 +1,10 @@
 # 00 - Setup e Configuração de ambiente
 
-Você irá utilizar 2 ferramentas para desenvolver os laboratorios:
+Você irá utilizar 3 ferramentas para desenvolver os laboratorios:
 
 1. Uma conta da AWS criada por você.
 2. [AWS Cloud 9](https://aws.amazon.com/pt/pm/cloud9/?gclid=Cj0KCQiAoKeuBhCoARIsAB4WxtcamFl7cx12ck9DB6XGFvG4AzszNJETY8tzmWb3TMcMxf7d_6aTeeoaAsTXEALw_wcB&trk=fc647821-0350-421a-9d6d-3a5e8fd6345b&sc_channel=ps&ef_id=Cj0KCQiAoKeuBhCoARIsAB4WxtcamFl7cx12ck9DB6XGFvG4AzszNJETY8tzmWb3TMcMxf7d_6aTeeoaAsTXEALw_wcB:G:s&s_kwcid=AL!4422!3!651510591828!e!!g!!cloud%209%20ide!19835810381!145708540943). Uma IDE cloud dentro da AWS para todos terem um ambiente igual e com a autorização para executar os comandos dos exercicios.
+3. [Postman](https://www.postman.com/). Uma ferramenta para testar APIs.
 
 ### Conta AWS
 > [!IMPORTANT]
@@ -130,3 +131,14 @@ seu IDE.
 16. Execute o comando `cd 01-criando-o-ambiente-de-desenvolvimento` para entrar na pasta com os scripts de Configuração.
 17.  Precisamos aumentar o tamanho do volume(HD) do cloud9. Para isso execute o comando  `sh resize.sh`
    ![img/resizeEBS](img/resizeEBS.png)
+
+
+### Postman online
+
+1. Acesse o [postman online](https://go.postman.co/home)
+2. Faça login com sua conta Postman ou crie uma nova conta se necessário.
+   
+   ![](img/p1.png)
+3. No canto superior esquerdo clique em `Workspaces` e depois em `Create a workspace`
+4. Crie uma workspace pessoal (personal) com o nome `usp-serverless-computing`.
+   > Workspaces do Postman são ambientes colaborativos que permitem aos usuários organizar, desenvolver, testar e compartilhar APIs dentro de um contexto específico ou projeto. Eles funcionam como espaços de trabalho dedicados onde equipes ou indivíduos podem agrupar coleções de requisições, ambientes, mocks, documentações e monitores de API relacionados a um determinado objetivo ou projeto. Os workspaces facilitam a colaboração em tempo real, permitindo que membros da equipe trabalhem juntos em APIs, vejam atualizações instantâneas e gerenciem o acesso através de configurações de visibilidade e permissões. Disponíveis nas versões pessoal e de equipe, os workspaces do Postman oferecem uma maneira eficiente de segmentar o trabalho de API, promovendo organização, eficiência e sinergia entre os desenvolvedores, independentemente de sua localização geográfica.
