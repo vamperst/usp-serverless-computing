@@ -28,8 +28,6 @@ OBJETIVO: Criar a primeira api no serviço [Amazon API Gateway](https://aws.amaz
 
    > A API utiliza a versão 2.0 da especificação Swagger e inclui definições de modelos para `Pet`, `Pets`, `NewPet`, e `NewPetResponse`, facilitando a compreensão e o uso dos endpoints. A integração com o Amazon API Gateway é evidenciada pela presença de extensões `x-amazon-apigateway-integration`, que detalham como as requisições são mapeadas para os backends configurados, além de definir comportamentos específicos como o tratamento de CORS.
 
-   A documentação da API é enriquecida com descrições detalhadas, parâmetros, e informações de resposta, tornando-a uma ferramenta valiosa para desenvolvedores que desejam explorar ou integrar com a API PetStore.
-
 
 
 4. No canto inferior direito da tela clique em `Importar`
