@@ -17,98 +17,19 @@ OBJETIVO: Criar a primeira api no serviço [Amazon API Gateway](https://aws.amaz
    > [Swagger](https://swagger.io/) é uma especificação e um conjunto de ferramentas de código aberto projetadas para ajudar desenvolvedores a projetar, construir, documentar e consumir APIs RESTful de maneira fácil e eficiente. Atua como um contrato entre o serviço de API e seus consumidores, permitindo uma compreensão clara das funções da API, dos parâmetros esperados e dos formatos de resposta. As principais versões do Swagger incluem a versão 1.x, que introduziu o conceito; a versão 2.0, que trouxe melhorias significativas na especificação, permitindo descrições mais detalhadas das APIs, incluindo informações sobre autenticação, modelos de dados e métodos HTTP suportados; e a OpenAPI Specification (OAS) versão 3.0 e posteriores (3.0.x, 3.1.0), que evoluíram a partir do Swagger, ampliando ainda mais as capacidades de descrição da API com suporte a mais tipos de conteúdo, links entre operações, e outras funcionalidades avançadas. A transição para o termo OpenAPI Specification, adotado pela versão 3.0, reflete a maturidade e a adoção ampla da iniciativa, promovendo ainda mais a interoperabilidade e a padronização das APIs RESTful.
 
 
-    ># PetStore API Documentation
-        Esta documentação descreve a API PetStore, criada como um exemplo de integração via HTTP com endpoints demo Pet Store usando o Amazon API Gateway.
+    > #### Explicação do Swagger da API de exemplo
+    > Este Swagger descreve uma API de mock chamada "PetStore", criada para demonstração com o Amazon API Gateway, simulando uma loja de animais de estimação com endpoints de demonstração via HTTP. A API é acessível via HTTPS e oferece várias operações relacionadas a pets, como listar todos os pets, criar um novo pet e obter informações de um pet específico através de seus respectivos endpoints `/pets`, `/pets/{petId}`, e a raiz `/`.
 
-        ## Informações Gerais
+   > A raiz `/` suporta um método `GET` que retorna uma página HTML com informações sobre o uso da API, servindo como uma introdução e guia rápido para novos usuários. Essa resposta é gerada por uma integração mock, demonstrando a flexibilidade do API Gateway em fornecer respostas estáticas ou dinâmicas.
 
-        - **Versão Swagger**: 2.0
-        - **Descrição**: Your first API with Amazon API Gateway. This is a sample API that integrates via HTTP with our demo Pet Store endpoints.
-        - **Título**: PetStore
-        - **Esquemas**: HTTPS
+   > O endpoint `/pets` permite operações `GET` para listar todos os pets disponíveis, com suporte para filtragem por tipo e paginação através de parâmetros de query, e operações `POST` para criar um novo pet, aceitando um corpo de requisição JSON com as informações do pet.
 
-        ## Endpoints
+   > O endpoint `/pets/{petId}` é configurado para operações `GET`, permitindo que os usuários recuperem informações detalhadas de um pet específico fornecendo seu `petId` como parâmetro de caminho.
 
-        ### Raiz `/`
+   > A API utiliza a versão 2.0 da especificação Swagger e inclui definições de modelos para `Pet`, `Pets`, `NewPet`, e `NewPetResponse`, facilitando a compreensão e o uso dos endpoints. A integração com o Amazon API Gateway é evidenciada pela presença de extensões `x-amazon-apigateway-integration`, que detalham como as requisições são mapeadas para os backends configurados, além de definir comportamentos específicos como o tratamento de CORS.
 
-        #### GET
+   A documentação da API é enriquecida com descrições detalhadas, parâmetros, e informações de resposta, tornando-a uma ferramenta valiosa para desenvolvedores que desejam explorar ou integrar com a API PetStore.
 
-        - **Tags**: pets
-        - **Descrição**: PetStore HTML web page containing API usage information.
-        - **Consumes**: application/json
-        - **Produces**: text/html
-        - **Respostas**:
-        - **200**: Successful operation. Retorna uma página HTML com informações de uso da API.
-
-        ### `/pets`
-
-        #### GET
-
-        - **Tags**: pets
-        - **Sumário**: List all pets
-        - **Produces**: application/json
-        - **Parâmetros**:
-        - `type` (query): The type of pet to retrieve (opcional).
-        - `page` (query): Page number of results to return (opcional).
-        - **Respostas**:
-        - **200**: Successful operation. Retorna uma lista de pets.
-
-        #### POST
-
-        - **Tags**: pets
-        - **Sumário**: Create a pet
-        - **Consumes**: application/json
-        - **Produces**: application/json
-        - **Parâmetros**:
-        - **Body** (`NewPet`): Pet object that needs to be added to the store.
-        - **Respostas**:
-        - **200**: Successful operation. Retorna detalhes do pet criado.
-
-        ### `/pets/{petId}`
-
-        #### GET
-
-        - **Tags**: pets
-        - **Sumário**: Info for a specific pet
-        - **Produces**: application/json
-        - **Parâmetros**:
-        - `petId` (path): The id of the pet to retrieve.
-        - **Respostas**:
-        - **200**: Successful operation. Retorna detalhes do pet especificado.
-
-        ## Modelos
-
-        ### `Pets`
-
-        - **Tipo**: array
-        - **Itens**: Referência a `Pet`.
-
-        ### `Pet`
-
-        - **Tipo**: object
-        - **Propriedades**:
-        - `id`: integer
-        - `type`: string
-        - `price`: number
-
-        ### `NewPet`
-
-        - **Tipo**: object
-        - **Propriedades**:
-        - `type`: Referência a `PetType`.
-        - `price`: number
-
-        ### `NewPetResponse`
-
-        - **Tipo**: object
-        - **Propriedades**:
-        - `pet`: Referência a `Pet`.
-        - `message`: string
-
-        ### `PetType`
-
-        - **Tipo**: string
-        - **Enum**: [dog, cat, fish, bird, gecko]
 
 
 4. No canto inferior direito da tela clique em `Importar`
