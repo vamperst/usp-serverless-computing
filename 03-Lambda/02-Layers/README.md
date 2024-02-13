@@ -55,27 +55,6 @@ A biblioteca `boto3` é o kit de software da Amazon Web Services (AWS) para Pyth
 
 <blockquote>
 
-
-**Provider Configuration:**
-
-- `provider:`  
-  Configurações globais do provedor de serviços de nuvem.
-  
-  - `name: aws`  
-    O provedor de serviços de nuvem é a AWS (Amazon Web Services).
-
-  - `runtime: python3.11`  
-    Define Python 3.11 como a runtime para as funções Lambda, especificando a versão da linguagem Python que será usada.
-
-  - `memorySize: 128`  
-    Aloca 128 MB de memória para as funções Lambda, determinando o limite de memória disponível durante a execução.
-
-  - `region: 'us-east-1'`  
-    Especifica a região da AWS onde os recursos serão implantados, neste caso, 'us-east-1' (Norte da Virgínia, EUA).
-
-  - `timeout: 300`  
-    Configura o tempo máximo de execução para as funções Lambda em 300 segundos (5 minutos), após o qual a execução é automaticamente interrompida.
-
 **Package Configuration:**
 
 - `package:`  
@@ -122,7 +101,7 @@ Este arquivo `serverless.yml` define um serviço serverless com uma função Lam
 
 </blockquote>
 
-10.  Fazer deploy da função criada `sls deploy --verbose` no terminal do cloud 9.
+1.   Fazer deploy da função criada `sls deploy --verbose` no terminal do cloud 9.
    
    ![img/slsdeploy.png](img/slsdeploy.png) 
 <blockquote>
@@ -155,4 +134,4 @@ Esse processo automatiza a gestão de dependências e o reuso de código entre f
     ![img/camadascriadas.png](img/camadascriadas.png)
 14. Para invocar remotamente a função utilize o comando `sls invoke -f hello` no terminal do cloud 9
   ![img/slsinvoke.png](img/slsinvoke.png)
-15.  destrua a função feita `sls remove`
+15. Destrua a função feita `sls remove`
