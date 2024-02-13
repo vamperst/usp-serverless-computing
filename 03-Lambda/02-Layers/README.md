@@ -101,9 +101,10 @@ Este arquivo `serverless.yml` define um serviço serverless com uma função Lam
 
 </blockquote>
 
-1.   Fazer deploy da função criada `sls deploy --verbose` no terminal do cloud 9.
+10. Fazer deploy da função criada `sls deploy --verbose` no terminal do cloud 9.
    
    ![img/slsdeploy.png](img/slsdeploy.png) 
+
 <blockquote>
 Quando se utiliza o comando `sls deploy` com o Serverless Framework para implantar uma aplicação serverless que inclui Lambda Layers, o processo envolve vários passos-chave, especialmente no que diz respeito ao empacotamento de dependências em arquivos ZIP separados e à subida desses arquivos para o Amazon S3. Aqui está uma visão geral detalhada desse processo:
 
