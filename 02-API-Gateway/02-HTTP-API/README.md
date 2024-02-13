@@ -230,36 +230,35 @@ Este código demonstra um padrão comum para funções Lambda que servem como ba
 
 28. No link copie o conteudo abaixo e clique em `continue`:
 ```url
-https://raw.githubusercontent.com/vamperst/fiap-gerenciamento-de-apis/master/02-HTTP-API/http-crud-tutorial-api.postman_collection.json
+https://raw.githubusercontent.com/vamperst/usp-serverless-computing/master/02-API-Gateway/02-HTTP-API/http-crud-tutorial-api.postman_collection.json
 ```
-![](img/21.png)
 
-29. Verifique as informações e clique em `Import`
+  ![](img/21.png)
+
+29.  Você irá precisar da URL base da sua API. Para isso abra seu painel do [API Gateway](https://us-east-1.console.aws.amazon.com/apigateway/main/apis?region=us-east-1), clique na api `http-crud-tutorial-api`, na lateral esquerda clique em `Stages` e copie a URL descrita em `Invocar URL`
     
-    ![](img/22.png)
+  ![](img/23.png)
 
-30. Você irá precisar da URL base da sua API. Para isso abra seu painel do [API Gateway](https://us-east-1.console.aws.amazon.com/apigateway/main/apis?region=us-east-1), clique na api `http-crud-tutorial-api` e copie a URL descrita em `Invocar URL`
+  ![](img/24.png)
+
+30.  De volta ao POSTMAN, clique em `Collections`.
     
-    ![](img/23.png)
+  ![](img/25.png)
 
-    ![](img/24.png)
-
-31. De volta ao POSTMAN, clique em `Collections`.
+31.  Clique em `http-crud-tutorial-api` e selecione a aba `Variables`
     
-    ![](img/25.png)
+  ![](img/26.png)
 
-32. Clique em `http-crud-tutorial-api` e selecione a aba `Variables`
+32.  Na variavel BaseUrl cole a URL copiada da sua API onde esta escrito `SUA URL` e clique em `Save` no canto superior direito da tela.
     
-    ![](img/26.png)
+  ![](img/27.png)
 
-33. Na variavel BaseUrl cole a URL copiada da sua API onde esta escrito `SUA URL` e clique em `Save` no canto superior direito da tela.
-    
-    ![](img/27.png)
-
-34. A primeira chamada que devemos fazer é para inserir objetos no banco. Para tal abra a chamada `PUT Items` do postman e clique na aba `Body`.
-    ![](img/28.png)
-35. Clique em `Send` e se tudo ocorrer bem você verá a mensagem `Put item 124` na parte inferior da página.
-36. Altere o valor do id no json 3 vezes com os valores abaixo e clique em `Send` para adicionar mais 3 itens na tabela.
+33.  A primeira chamada que devemos fazer é para inserir objetos no banco. Para tal abra a chamada `PUT Items` do postman e clique na aba `Body`.
+  
+  ![](img/28.png)
+  
+34.  Clique em `Send` e se tudo ocorrer bem você verá a mensagem `Put item 124` na parte inferior da página.
+35. Altere o valor do id no json 3 vezes com os valores abaixo e clique em `Send` para adicionar mais 3 itens na tabela.
     1. Id: `123`
     2. Id: `125`
     3. Id: `126`
