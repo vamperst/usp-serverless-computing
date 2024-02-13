@@ -1,4 +1,4 @@
-# Aula 02.1 - Lambda
+# Aula 03.1 - Lambda
 
 
 1. No terminal do IDE criado no cloud9 execute o comando `cd ~/environment/usp-serverless-computing/03-Lambda/01-intro` para entrar na pasta que fara este exercicio.
