@@ -361,7 +361,7 @@ Para mais informações sobre como trabalhar com variáveis de contexto e person
     
   ![](img/37.png)
 
-57. Adicione a Key `x-api-key` com o valor da chave que copiou no passo 42. Caso tenha perdido, acesse o [link](https://us-east-1.console.aws.amazon.com/apigateway/main/api-keys?region=us-east-1), clique em fiap-api e mostrar.
+57. Adicione a Key `x-api-key` com o valor da chave que copiou no passo 42. Caso tenha perdido, acesse o [link](https://us-east-1.console.aws.amazon.com/apigateway/main/api-keys?region=us-east-1), clique em usp-api e mostrar.
     
   ![](img/41.png)
 
