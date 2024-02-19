@@ -112,18 +112,82 @@ Seguindo esses passos, você poderá consumir mensagens de uma fila SQS Standard
 
 ![img/lambda-01.png](img/lambda-01.png)
 
-5. Crie o arquivo 'handler.py' com o seguinte conteudo. O abra com o seguinte comando `c9 open handler.py`
+<blockquote>
+O código fornecido é uma configuração para o Serverless Framework, uma ferramenta popular para construir e implantar aplicações serverless, como funções AWS Lambda. Este arquivo de configuração define uma aplicação chamada `sqstest` com várias especificações para o ambiente de execução, permissões IAM, variáveis de ambiente e funções Lambda. Vamos detalhar cada seção do arquivo:
+
+**service: sqstest**  
+Esta linha define o nome do serviço como `sqstest`. O nome do serviço é usado para agrupar todos os recursos relacionados no AWS CloudFormation.
+
+**frameworkVersion: '3'**  
+Especifica a versão do Serverless Framework utilizada, que neste caso é a versão `3`.
+
+**provider:**  
+Esta seção configura o provedor de serviços de nuvem, que neste caso é a AWS (`name: aws`). Ela inclui várias configurações específicas para a execução das funções Lambda, como:
+
+- **runtime: python3.9**: Define o ambiente de execução das funções Lambda como Python 3.9.
+- **memorySize: 128**: Aloca 128 MB de memória para a execução das funções Lambda.
+- **region: 'us-east-1'**: Especifica que os recursos serão implantados na região `us-east-1` da AWS.
+- **timeout: 300**: Configura o tempo máximo de execução (timeout) para as funções Lambda como 300 segundos (5 minutos).
+- **iam:**  
+    - **role:** Define as políticas de permissão para a função Lambda, permitindo que ela envie mensagens para qualquer fila SQS (`sqs:SendMessage`), e inclui uma política gerenciada (`AWSLambdaSQSQueueExecutionRole`) que oferece permissões adicionais necessárias para a execução da função com filas SQS.
+- **environment:**  
+    Define variáveis de ambiente para as funções Lambda. Neste caso, `sqs_url` e `sqs_url_dest` são URLs para filas SQS específicas, construídas dinamicamente usando a função `!Sub` para incluir a região da AWS e o ID da conta.
+
+**functions:**  
+Esta seção define as funções que fazem parte do serviço. Neste caso, há uma função:
+
+- **sqsHandler:**  
+    - **handler: handler.handler**: Especifica o arquivo e o método de manipulação (`handler.py` e a função `handler`) que será invocado quando a função Lambda for executada.
+    - **events:**  
+        - **schedule:**  
+            - **rate: rate(5 minutes)**: Define um gatilho baseado em tempo para a função, configurando-a para ser executada a cada 5 minutos.
+            - **enabled: true**: Habilita o gatilho de agendamento, garantindo que a função seja executada conforme especificado.
+
+Este arquivo de configuração do Serverless Framework automatiza o processo de configuração e implantação de funções Lambda na AWS, incluindo permissões necessárias, gatilhos de execução e variáveis de ambiente, facilitando o desenvolvimento e a manutenção de aplicações serverless.
+</blockquote>
+
+5. Altere o arquivo 'handler.py' com o seguinte conteudo. O abra com o seguinte comando `c9 open handler.py`
 
 ![img/lambda-02.png](img/lambda-02.png)
 
-6. rode o comando `sls deploy`
-7. Coloque alguns itens na fila com o comando `python3 put.py`, lembrando que cada execução do lambda criado pode consumir até 1000 posições da fila sqs.
-8. Para execução do lambda rode o comando `sls invoke -l -f sqsHandler` no terminal
-9.  Enquando espera o comando terminar pode observar no painel do SQS as mensagens se movendo a cada atualização manual pelo canto direito superior. Lembre que cada execução move 1000 por definição no código. [Link para painel SQS](https://console.aws.amazon.com/sqs/v2/home?region=us-east-1#/queues)
+<blockquote>
+Este código em Python define uma função `handler` que é projetada para ser usada como uma função de manipulação de eventos, em um ambiente AWS Lambda, para ler mensagens de uma fila do Amazon SQS, processá-las de alguma forma e então encaminhá-las para outra fila do SQS. Abaixo está a explicação detalhada de cada parte do código:
+
+- **Imports**:
+  - `from sqsHandler import SqsHandler`: Importa a classe `SqsHandler` de um módulo chamado `sqsHandler`. Essa classe é  responsável por encapsular a lógica de interação com uma fila do Amazon SQS, como enviar, receber e deletar mensagens.
+  - `from env import Variables`: Importa a classe `Variables` de um módulo chamado `env`. Esta classe provavelmente é usada para acessar variáveis de ambiente ou configurações específicas, como URLs das filas SQS.
+  - `import json`: Importa o módulo `json` que é usado para trabalhar com dados no formato JSON, permitindo codificar e decodificar dados nesse formato.
+
+- **Definição da função handler**:
+  - `def handler(event, context):` define a função `handler` que aceita dois parâmetros: `event` e `context`. Esses parâmetros são padrão em funções Lambda, onde `event` contém informações sobre o evento que disparou a função, e `context` fornece informações sobre o ambiente de execução da função.
+
+- **Inicialização de variáveis e objetos SQS**:
+  - `env = Variables()`: Cria uma instância da classe `Variables` para acessar configurações.
+  - `sqs = SqsHandler(env.get_sqs_url())`: Cria uma instância da classe `SqsHandler` para interagir com a fila SQS de origem, usando a URL obtida através do método `get_sqs_url` da instância `env`.
+  - `sqs_dest = SqsHandler(env.get_sqs_url_dest())`: Semelhante ao acima, mas cria um manipulador para a fila SQS de destino, usando a URL obtida por `get_sqs_url_dest`.
+
+- **Processamento de mensagens**:
+  - O loop `for i in range(100):` inicia um loop que tentará processar mensagens até 100 vezes.
+  - `msgs = sqs.getMessage(10)`: Chama o método `getMessage` do objeto `sqs` para tentar receber até 10 mensagens da fila de origem.
+  - `print(json.dumps(msgs))`: Imprime as mensagens recebidas no formato JSON.
+  - Os `if` subsequentes verificam se não há mensagens para processar, interrompendo o loop se `msgs` não contiver uma chave `'Messages'` ou se o array de mensagens estiver vazio.
+
+- **Encaminhamento e deleção de mensagens**:
+  - Dentro do loop `for message in msgs['Messages']:` itera sobre cada mensagem recebida.
+  - `sqs_dest.send(json.dumps(message['Body']))`: Envia o corpo da mensagem (codificado em JSON) para a fila de destino.
+  - `sqs.deleteMessage(message['ReceiptHandle'])`: Deleta a mensagem da fila de origem, usando o `ReceiptHandle` da mensagem para identificá-la. Isso é importante para garantir que a mensagem não seja processada novamente.
+
+Este código efetua uma ponte entre duas filas SQS, transferindo mensagens de uma fila de origem para uma fila de destino após processamento, que neste caso é simplesmente o reenvio da mensagem. Isso pode ser útil em cenários onde é necessário processar ou filtrar mensagens antes de encaminhá-las para seu destino final.
+</blockquote>
+
+1. rode o comando `sls deploy`
+2. Coloque alguns itens na fila com o comando `python3 put.py`, lembrando que cada execução do lambda criado pode consumir até 1000 posições da fila sqs.
+3. Para execução do lambda rode o comando `sls invoke -l -f sqsHandler` no terminal
+4.  Enquando espera o comando terminar pode observar no painel do SQS as mensagens se movendo a cada atualização manual pelo canto direito superior. Lembre que cada execução move 1000 por definição no código. [Link para painel SQS](https://console.aws.amazon.com/sqs/v2/home?region=us-east-1#/queues)
 
     ![alt](img/lambda-02-1.png)
 
-10. Vá até o painel de [regras do cloudwath](https://us-east-1.console.aws.amazon.com/events/home?region=us-east-1#/rules?redirect_from_cwe=true) que verá a regra de execução baseada em tempo criada com o serverless framework. A regra tem nome iniciado em `sqstest`
+5.  Vá até o painel de [regras do cloudwath](https://us-east-1.console.aws.amazon.com/events/home?region=us-east-1#/rules?redirect_from_cwe=true) que verá a regra de execução baseada em tempo criada com o serverless framework. A regra tem nome iniciado em `sqstest`
 
 ![img/lambda-03.png](img/lambda-03.png)
 
