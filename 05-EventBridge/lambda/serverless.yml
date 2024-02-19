@@ -6,7 +6,9 @@ provider:
   runtime: python3.9
   lambdaHashingVersion: 20201221
   iam:
-    role: !Sub arn:aws:iam::${AWS::AccountId}:role/LabRole
+    role:
+      managedPolicies:
+        - 'arn:aws:iam::aws:policy/AmazonEventBridgeFullAccess'
   eventBridge:
     useCloudFormation: true
 
