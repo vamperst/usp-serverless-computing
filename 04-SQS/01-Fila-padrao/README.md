@@ -27,8 +27,8 @@ As filas Standard do SQS são ideais para situações em que o volume de mensage
 
 ### Enviando dados para a fila
 
-1. No terminal do CLoud 9 IDE criado no cloud9 execute o comando `cd ~/environment/usp-serverless-computing/04-SQS/01-Fila-padrao/` para entrar na pasta que fara este exercicio.
-2. Atualize o repositorio com o comando `git pull origin master`
+1. De volta ao terminal do Cloud9 IDE, execute o comando `cd ~/environment/usp-serverless-computing/` seguido do comando `git pull origin master` para atualizar o repositório.
+2. Execute o comando `cd ~/environment/usp-serverless-computing/04-SQS/01-Fila-padrao/` para entrar na pasta que fara este exercicio.
 3. Abra o arquivo put.py com o comando `c9 open put.py`
 4. Altere o arquivo put.py adicionando a URL da fila do sqs que criou nos passos anteriores
 
@@ -48,6 +48,63 @@ As filas Standard do SQS são ideais para situações em que o volume de mensage
 
 ### Consumindo SQS
 
+<blockquote>
+Para consumir mensagens de uma fila SQS Standard sem utilizar AWS Lambda, você pode seguir estes passos, levando em consideração que o ambiente para acessar a AWS já está configurado (isto é, as credenciais da AWS estão configuradas e você tem acesso programático ao SQS):
+
+**1. Escolha um SDK AWS**: Primeiro, escolha o SDK da AWS na linguagem de programação de sua preferência (por exemplo, AWS SDK para Python (Boto3), Java, Node.js, etc.). Este SDK facilitará a interação com o SQS.
+
+**2. Inicialize o cliente SQS**: Utilize o SDK para inicializar um cliente SQS. Isso geralmente envolve importar o SDK, configurar a região e, se necessário, as credenciais de acesso.
+
+**Exemplo em Python com Boto3**:
+```python
+import boto3
+
+# Inicializa o cliente SQS
+sqs = boto3.client('sqs', region_name='sua-regiao')
+```
+
+**3. Receba mensagens da fila**: Use o cliente SQS para receber mensagens da fila. Você pode especificar o número de mensagens a serem recebidas (até 10 por vez) e o tempo de espera (long polling) para reduzir o número de chamadas de API vazias.
+
+**Exemplo em Python com Boto3**:
+```python
+queue_url = 'URL-da-sua-fila-SQS'
+
+# Recebe mensagens
+response = sqs.receive_message(
+    QueueUrl=queue_url,
+    MaxNumberOfMessages=10,
+    WaitTimeSeconds=20  # Long polling
+)
+```
+
+**4. Processar as mensagens recebidas**: Após receber as mensagens, você pode processá-las conforme necessário. Isso pode incluir desempacotar os dados da mensagem, executar uma tarefa e registrar o resultado.
+
+**5. Apagar a mensagem da fila**: Após processar uma mensagem com sucesso, certifique-se de apagá-la da fila para evitar que ela seja recebida e processada novamente. Para isso, você precisará do `ReceiptHandle` da mensagem.
+
+**Exemplo em Python com Boto3**:
+```python
+if 'Messages' in response:
+    for message in response['Messages']:
+        # Processa a mensagem
+        print("Mensagem: ", message['Body'])
+        
+        # Apaga a mensagem da fila
+        sqs.delete_message(
+            QueueUrl=queue_url,
+            ReceiptHandle=message['ReceiptHandle']
+        )
+```
+
+**Considerações importantes**:
+
+- **Tratamento de erros**: Implemente tratamento de erros adequado para lidar com possíveis exceções, como mensagens que não podem ser processadas.
+- **Visibilidade Timeout**: Ao receber uma mensagem, ela não é removida da fila, mas fica invisível para outros consumidores por um período (o "visibility timeout"). Se a mensagem não for apagada neste período, ela se tornará visível novamente e poderá ser recebida por outro consumidor. Ajuste o `VisibilityTimeout` conforme necessário.
+- **Concorrência**: Se estiver operando em um ambiente com múltiplos consumidores, considere as implicações da concorrência no processamento de mensagens.
+- **Monitoramento**: Monitore as operações de sua fila SQS para otimizar o desempenho e os custos, utilizando ferramentas como o Amazon CloudWatch.
+
+Seguindo esses passos, você poderá consumir mensagens de uma fila SQS Standard de forma eficaz, sem a utilização de AWS Lambda.
+</blockquote>
+
 1. [Crie mais uma fila](https://us-east-1.console.aws.amazon.com/sqs/v3/home?region=us-east-1#/create-queue) sqs utilizando o mesmo procedimento do exercicio anterior com o mesmo nome da anterior com o sulfixo '_dest', ficará `demoqueue_dest`
 2. Execute o comando no terminal do cloud 9 `sls create --template "aws-python3"`
 3. Abra o arquivo serverless.yml com o comando `c9 open serverless.yml`
@@ -56,13 +113,28 @@ As filas Standard do SQS são ideais para situações em que o volume de mensage
 ![img/lambda-01.png](img/lambda-01.png)
 
 5. Crie o arquivo 'handler.py' com o seguinte conteudo. O abra com o seguinte comando `c9 open handler.py`
+
 ![img/lambda-02.png](img/lambda-02.png)
-7. rode o comando `sls deploy`
-8. Coloque alguns itens na fila com o comando `python3 put.py`, lembrando que cada execução do lambda criado pode consumir até 1000 posições da fila sqs.
-9. Para execução do lambda rode o comando `sls invoke -l -f sqsHandler` no terminal
-10. Enquando espera o comando terminar pode observar no painel do SQS as mensagens se movendo a cada atualização manual pelo canto direito superior. Lembre que cada execução move 1000 por definição no código. [Link para painel SQS](https://console.aws.amazon.com/sqs/v2/home?region=us-east-1#/queues)
+
+6. rode o comando `sls deploy`
+7. Coloque alguns itens na fila com o comando `python3 put.py`, lembrando que cada execução do lambda criado pode consumir até 1000 posições da fila sqs.
+8. Para execução do lambda rode o comando `sls invoke -l -f sqsHandler` no terminal
+9.  Enquando espera o comando terminar pode observar no painel do SQS as mensagens se movendo a cada atualização manual pelo canto direito superior. Lembre que cada execução move 1000 por definição no código. [Link para painel SQS](https://console.aws.amazon.com/sqs/v2/home?region=us-east-1#/queues)
+
     ![alt](img/lambda-02-1.png)
-11. Vá até o painel de [regras do cloudwath](https://us-east-1.console.aws.amazon.com/events/home?region=us-east-1#/rules?redirect_from_cwe=true) que verá a regra de execução baseada em tempo criada com o serverless framework. A regra tem nome iniciado em `sqstest`
+
+10. Vá até o painel de [regras do cloudwath](https://us-east-1.console.aws.amazon.com/events/home?region=us-east-1#/rules?redirect_from_cwe=true) que verá a regra de execução baseada em tempo criada com o serverless framework. A regra tem nome iniciado em `sqstest`
+
 ![img/lambda-03.png](img/lambda-03.png)
-12. Se esperar alguns execuções vai ver que a fila principal vai zerar.
-13. Execute o comando `sls remove` no terminal para remover o que foi criado.
+
+11.   Se esperar alguns execuções vai ver que a fila principal vai zerar.
+12. Execute o comando `sls remove` no terminal para remover o que foi criado.
+13. Vamos apagar as mensagens que ainda estão nas filas do SQS. Para isso acesse o painel do [SQS](https://us-east-1.console.aws.amazon.com/sqs/v2/home?region=us-east-1#/queues) e selecione primeiro a fila `demoqueue` e clique em `Ações` e  clique em `Limpar`. 
+    
+    ![](img/sqs04.png)
+
+14. Digite `limpar` como pedido e clique em `Limpar`
+    
+    ![](img/sqs05.png)
+
+15. Execute o mesmo processo para a fila `demoqueue_dest`.
