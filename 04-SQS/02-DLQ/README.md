@@ -96,4 +96,6 @@ Este script é uma estrutura básica para um consumidor de fila SQS que opera co
 
 8. Execute o comando `python3 consumer.py` no terminal
 9. Observe que enquanto roda o script a fila DLQ é populada no console do SQS. [Link para painel SQS](https://console.aws.amazon.com/sqs/v2/home?region=us-east-1#/queues)
+  > Lembrando que o comportamento do script é de pegar a mensagem e não processar, então a mensagem volta para a fila principal, e como o tempo de visibilidade é de 1 segundo, ela volta para a fila principal para ser entregue novamente, e assim por diante até que o número de tentativas de entrega seja excedido e a mensagem seja enviada para a DLQ.
+  
   ![img/dlq-04.png](img/dlq-04.png)
