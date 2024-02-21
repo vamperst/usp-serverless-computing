@@ -1,0 +1,8 @@
+regions:
+- us-east-1
+- global
+
+account-blocklist:
+  - "999999999999" # production
+accounts:
+  <IDCONTA>: {} # aws-nuke-example
