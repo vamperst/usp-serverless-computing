@@ -90,7 +90,7 @@ Este script Bash realiza várias operações, principalmente focadas na instala�
 Este script, portanto, automatiza a instalação do `aws-nuke`, configura um alias para a conta AWS e prepara um arquivo de configuração para ser usado com a ferramenta, facilitando a gestão de recursos AWS de forma massiva e automatizada.
 </blockquote>
 
-5. Após a execução do script, execute o comando `aws-nuke -c nuke-config.yml` para saber quais recursos serão deletados. Note que ele vai pedir para que você confirme o alias da conta, copie o Alias como mostrado na imagem e cole no pronpt do terminal. Após isso, ele vai listar todos os recursos que serão deletados.
+5. Após a execução do script, execute o comando `aws-nuke -c nuke-config.yml` para saber quais recursos serão deletados. Note que ele vai pedir para que você confirme o alias da conta, copie o Alias como mostrado na imagem e cole no prompt do terminal. Após isso, ele vai listar todos os recursos que serão deletados.
    
    ![cloudshell](img/3.png)
 6. Revise o conteúdo da lista para garantir que não haja recursos críticos que não devem ser excluídos. Caso haja, [edite o arquivo `nuke-config.yml`](https://github.com/rebuy-de/aws-nuke) segundo a documentação e suas necessidades para incluir esses recursos na lista de preservação. Lembrando que o AWS-Nuke é uma ferramenta destrutiva e deve ser usada com extrema cautela.
