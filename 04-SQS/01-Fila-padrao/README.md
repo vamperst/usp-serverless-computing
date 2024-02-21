@@ -1,4 +1,4 @@
-# Aula 04.1 - Standart Queue
+# Aula 04.1 - Fila Padrão
 
 
 <blockquote>
